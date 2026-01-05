@@ -1,0 +1,5 @@
+# Application dependencies
+fastapi
+uvicorn
+prometheus-fastapi-instrumentator
+prometheus_client
