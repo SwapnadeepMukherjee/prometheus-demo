@@ -1,22 +1,29 @@
 services:
     fastapi-app:
         build: ./app
-        command: python app.py
-        ports:
-            - "5000:5000"
+        container_name: fastapi-app
+        # command: python app.py
+        network_mode: "host"
+        # ports:
+        #     - "5000:5000"
     prometheus:
-      image: prom/prometheus
-      volumes:
-          - ./prometheous/prometheous.yml:/etc/prometheus/prometheus.yml
-      ports:
-          - "9090:9090"
-      depends_on:
-          - fastapi-app
+        image: prom/prometheus:latest
+        container_name: prometheus
+        volumes:
+            - ./prometheous/prometheous.yml:/etc/prometheus/prometheus.yml
+        network_mode: "host"
+        # depends_on:
+        #     - fastapi-app
+        ports:
+            - "9090:9090"
+        # #This manually maps the hostname 'fastapi-app' to the host machine's gateway
+        # extra_hosts:
+        #     - "fastapi-app:host.docker.internal"
     grafana:
-      image: grafana/grafana:latest 
-      ports:
-          - "3000:3000"
-      environment:
-          - GF_SECURITY_ADMIN_PASSWORD=admin
-      depends_on:
-          - prometheus
+        image: grafana/grafana:latest 
+        ports:
+            - "3000:3000"
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        depends_on:
+            - prometheus
