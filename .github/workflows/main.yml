@@ -32,6 +32,8 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           
       - name: Run Tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           # Run pytest (ensure you have some basic tests in your repo)
           pytest
