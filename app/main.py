@@ -1,6 +1,6 @@
 import asyncio
 import random
-from fastAPI import FastAPI, Response
+from fastapi import FastAPI, Response
 # from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import      Instrumentator
 
@@ -21,7 +21,7 @@ async def heavy():
     await asyncio.sleep(wait_time)
     return {"status": "slow", "waited": wait_time}
 
-@app.get("/error"):
+@app.get("/error")
 async def error(response: Response):
     #Simulate a random failure:
     response.status_code = 500
